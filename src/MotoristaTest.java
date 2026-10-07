@@ -1,4 +1,3 @@
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -55,11 +54,27 @@ public class MotoristaTest {
     void deveDefinirCategoria() {
         //TODO Tarefa 4: testar categoria em pelo menos dois cenários
         // (ex.: 4 corridas com 3 concluídas → PRATA; 4 com 4 concluídas → DIAMANTE)
+        motorista.adicionar(new Corrida("C1", 10, 30));
+        motorista.adicionar(new Corrida("C2", 20, 40));
+        motorista.adicionar(new Corrida("C3", 30, 50));
+        motorista.adicionar(new Corrida("C4", 40, 60));
+        motorista.registrarConcluida("C1");
+        motorista.registrarConcluida("C2");
+        motorista.registrarConcluida("C3");
+        assertEquals(motorista.categoria(), Categoria.PRATA);
+        motorista.registrarConcluida("C4");
+        assertEquals(motorista.categoria(), Categoria.DIAMANTE);
     }
 
     @Test
     void deveCalcularGanhoLiquido() {
         //TODO Tarefa 5: testar ganhoLiquido usando a comissão da categoria
         // e o desconto de comissão acima de 500 km
+        motorista.adicionar(new Corrida("C1", 10, 30));
+        motorista.registrarConcluida("C1");
+        assertEquals(motorista.ganhoLiquido(), 27, 0.001);
+        motorista.adicionar(new Corrida("C2", 491, 70));
+        motorista.registrarConcluida(("C2"));
+        assertEquals(motorista.ganhoLiquido(), 95, 0.001);
     }
 }

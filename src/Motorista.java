@@ -84,8 +84,27 @@ public class Motorista {
      * Lista vazia → BRONZE.
      */
     public Categoria categoria() {
-        //TODO Tarefa 2
-        return Categoria.BRONZE;
+
+        int total = quantidadeCorridas(); 
+        int concluidas = 0;
+
+        for (Corrida c : corridas) {
+            if (c.estaConcluida())
+                concluidas += 1;
+        }
+
+        double taxa_conclusao = (double) concluidas / total;
+
+        if (taxa_conclusao <= 0.5) 
+            return Categoria.BRONZE;
+
+        if (taxa_conclusao <= 0.75)
+            return Categoria.PRATA;
+
+        if (taxa_conclusao <= 0.9)
+            return Categoria.OURO;
+        else
+            return Categoria.DIAMANTE;
     }
 
     /**
@@ -93,8 +112,13 @@ public class Motorista {
      * Acima de 500 km rodados, a comissão cai pela metade.
      */
     public double ganhoLiquido() {
-        //TODO Tarefa 3
-        return 0.0;
+        double valor_plataforma = 0;
+        if (kmRodados() > 500) 
+            valor_plataforma = faturamentoBruto() * (categoria().getComissao() / 2);
+        else 
+            valor_plataforma = faturamentoBruto() * (categoria().getComissao());
+
+        return faturamentoBruto() - valor_plataforma;
     }
 
     public String resumo() {
